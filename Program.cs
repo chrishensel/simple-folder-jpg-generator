@@ -23,7 +23,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Mime;
+using System.Linq;
+using ImageProcessor;
+using ImageProcessor.Imaging.Formats;
 using TagLib;
 
 namespace FolderJpgCreator
@@ -53,6 +55,7 @@ namespace FolderJpgCreator
 
             Console.WriteLine(Properties.Resources.ProcessBegin);
 
+            ImageFactory fac = new ImageFactory();
             DirectoryInfo dir = new DirectoryInfo(path);
 
             /* "Supported" extensions. Actually we support a lot more (via TagLibSharp).
@@ -73,8 +76,9 @@ namespace FolderJpgCreator
                     filesProcessed++;
 
                     DirectoryInfo fileDir = file.Directory;
+                    FileInfo folderJpg = new FileInfo(Path.Combine(fileDir.FullName, FolderJpgFileName));
 
-                    if (fileDir.GetFiles(FolderJpgFileName, SearchOption.TopDirectoryOnly).Length > 0)
+                    if (folderJpg.Exists)
                     {
                         filesSkipped++;
                         continue;
@@ -83,28 +87,21 @@ namespace FolderJpgCreator
                     var taggedFile = TagLib.File.Create(file.FullName);
 
                     IPicture[] pictures = taggedFile.Tag.Pictures;
+                    IPicture pic = pictures.FirstOrDefault(_ => _.Type == PictureType.FrontCover) ?? pictures.FirstOrDefault();
 
-                    if (pictures.Length > 0)
+                    if (pic == null)
                     {
-                        IPicture pic = pictures[0];
+                        continue;
+                    }
 
-                        string newFolderJpgPath = Path.Combine(fileDir.FullName, FolderJpgFileName);
+                    using (MemoryStream srcImgStream = new MemoryStream(pic.Data.Data))
+                    {
+                        fac.Load(srcImgStream);
+                        fac.Format(new JpegFormat());
 
-                        /* We assume that it's a JPEG all the time. Anything else should be converted to JPEG.
-                         * I've seen cover images that have image/png as well, although rare?
-                         */
-                        if (pic.MimeType != MediaTypeNames.Image.Jpeg)
+                        using (FileStream fs = new FileStream(folderJpg.FullName, FileMode.Create, FileAccess.Write, FileShare.Read))
                         {
-                            Console.WriteLine(Properties.Resources.ErrorPictureNotSupported, fileDir.FullName.Replace(path, string.Empty));
-                            continue;
-                        }
-
-                        /* Hint: For example, the Windows Media Player did create the folder.jpg file as a *hidden* file.
-                         * This seems inconvenient when wanting to getting rid of it. For this reason, the file is created regularly.
-                         */
-                        using (FileStream fs = new FileStream(newFolderJpgPath, FileMode.Create, FileAccess.Write, FileShare.Read))
-                        {
-                            fs.Write(pic.Data.Data, 0, pic.Data.Data.Length);
+                            fac.Save(fs);
                         }
 
                         filesWritten++;

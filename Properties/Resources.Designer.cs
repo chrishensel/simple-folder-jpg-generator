@@ -61,15 +61,6 @@ namespace FolderJpgCreator.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error: Assumed JPEG cover image not present ({0})!.
-        /// </summary>
-        internal static string ErrorPictureNotSupported {
-            get {
-                return ResourceManager.GetString("ErrorPictureNotSupported", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Processing directory....
         /// </summary>
         internal static string ProcessBegin {
