@@ -53,6 +53,11 @@ namespace FolderJpgCreator
 
             string path = Console.ReadLine();
 
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                path = Path.GetDirectoryName(typeof(Program).Assembly.Location);
+            }
+
             Console.WriteLine(Properties.Resources.ProcessBegin);
 
             ImageFactory fac = new ImageFactory();

@@ -127,6 +127,6 @@
     <value>Scanning and processing files with {0} extension...</value>
   </data>
   <data name="ProcessRequestInputPath" xml:space="preserve">
-    <value>Please type path to directory to recursively create folder.jpgs for:</value>
+    <value>Please type path to directory to recursively create folder.jpgs for (leave blank to use current directory):</value>
   </data>
 </root>
