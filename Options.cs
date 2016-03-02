@@ -20,28 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using CommandLine;
-using CommandLine.Text;
 
 namespace FolderJpgCreator
 {
-    class Program
+    class Options
     {
-        static void Main(string[] args)
-        {
-            Options opts = new Options();
-
-            if (!Parser.Default.ParseArguments(args, opts))
-            {
-                HelpText help = HelpText.AutoBuild(opts);
-
-                Console.WriteLine(help.ToString());
-            }
-            else
-            {
-                Routine.Go(opts.Path);
-            }
-        }
+        [Option('p', "path", HelpText = "The fully qualified path to process (including subdirectories).")]
+        public string Path { get; set; }
     }
 }

@@ -118,15 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ProcessBegin" xml:space="preserve">
-    <value>Processing directory...</value>
+    <value>Processing directory {0}...</value>
   </data>
   <data name="ProcessFinished" xml:space="preserve">
     <value>Completed. Processed {0} files, skipped {1} and wrote {2} folder.jpgs.</value>
   </data>
   <data name="ProcessingWildcardNow" xml:space="preserve">
     <value>Scanning and processing files with {0} extension...</value>
-  </data>
-  <data name="ProcessRequestInputPath" xml:space="preserve">
-    <value>Please type path to directory to recursively create folder.jpgs for (leave blank to use current directory):</value>
   </data>
 </root>

@@ -61,7 +61,7 @@ namespace FolderJpgCreator.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Processing directory....
+        ///   Looks up a localized string similar to Processing directory {0}....
         /// </summary>
         internal static string ProcessBegin {
             get {
@@ -84,15 +84,6 @@ namespace FolderJpgCreator.Properties {
         internal static string ProcessingWildcardNow {
             get {
                 return ResourceManager.GetString("ProcessingWildcardNow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please type path to directory to recursively create folder.jpgs for (leave blank to use current directory):.
-        /// </summary>
-        internal static string ProcessRequestInputPath {
-            get {
-                return ResourceManager.GetString("ProcessRequestInputPath", resourceCulture);
             }
         }
     }
